@@ -29,12 +29,6 @@ export async function applyLabels(
     await Promise.all(p)
   } catch (error) {
     // if 422, label already exists
-    console.log({
-      error,
-      iofe: error instanceof Error,
-      sine: 'status' in (error as {}),
-      e422: (error as { status: number }).status !== 422
-    })
     if (error instanceof Error && 'status' in error && error.status !== 422) {
       throw error
     }
