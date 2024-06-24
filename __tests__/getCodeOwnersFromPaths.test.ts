@@ -1,4 +1,4 @@
-import {getCodeOwnersFromPaths} from '../src/getCodeOwnersFromPaths'
+import { getCodeOwnersFromPaths } from '../src/getCodeOwnersFromPaths'
 
 // these tests use the CODEOWNERS file located in .github/CODEOWNERS
 test('* picks @gatsby', async () => {
@@ -7,7 +7,7 @@ test('* picks @gatsby', async () => {
   const owners: Set<string> = await getCodeOwnersFromPaths(inplist)
   expect(owners).toBeDefined()
   expect(owners.size).toBe(1)
-  expect(owners.has('@gatsby'))
+  expect(owners.has('@gatsby')).toBeTruthy()
 })
 
 test('src picks @org-teamA but NOT @gatsby', async () => {
@@ -16,7 +16,7 @@ test('src picks @org-teamA but NOT @gatsby', async () => {
   const owners: Set<string> = await getCodeOwnersFromPaths(inplist)
   expect(owners).toBeDefined()
   expect(owners.size).toBe(1)
-  expect(owners.has('@org-teamA'))
+  expect(owners.has('@org-teamA')).toBeTruthy()
 })
 
 test('multiple codeowners are all chosen', async () => {
@@ -25,6 +25,6 @@ test('multiple codeowners are all chosen', async () => {
   const owners: Set<string> = await getCodeOwnersFromPaths(inplist)
   expect(owners).toBeDefined()
   expect(owners.size).toBe(2)
-  expect(owners.has('@org-teamB'))
-  expect(owners.has('@org-teamC'))
+  expect(owners.has('@org-teamB')).toBeTruthy()
+  expect(owners.has('@org-teamC')).toBeTruthy()
 })

@@ -1,5 +1,4 @@
-import {getLabelsFromOwners} from '../src/getLabelsFromOwners'
-import {Label} from '../src/getLabelsFromOwners'
+import { getLabelsFromOwners, Label } from '../src/getLabelsFromOwners'
 
 test('labels names are same as owners', async () => {
   expect.assertions(6)
@@ -14,7 +13,7 @@ test('labels names are same as owners', async () => {
 })
 
 function isHexadecimal(input: string): boolean {
-  let regexp = /^[0-9a-fA-F]+$/
+  const regexp = /^[0-9a-fA-F]+$/
   if (regexp.test(input)) {
     return true
   }

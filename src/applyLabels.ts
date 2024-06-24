@@ -46,7 +46,6 @@ export async function applyLabels(
   await client.issues.addLabels({
     owner: context.issue.owner,
     repo: context.issue.repo,
-    // eslint-disable-next-line @typescript-eslint/camelcase
     issue_number: context.issue.number,
     labels: labelsAll
   })

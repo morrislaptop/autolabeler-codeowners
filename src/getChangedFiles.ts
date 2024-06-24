@@ -15,9 +15,7 @@ export async function getChangedFiles(
   const files = await client.pulls.listFiles({
     owner: context.issue.owner,
     repo: context.issue.repo,
-    // eslint-disable-next-line @typescript-eslint/camelcase
     pull_number: context.issue.number,
-    // eslint-disable-next-line @typescript-eslint/camelcase
     per_page: 100
   })
 
