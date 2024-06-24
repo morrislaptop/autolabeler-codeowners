@@ -1,4 +1,4 @@
-import {Context} from '@actions/github/lib/context'
+import { Context } from '@actions/github/lib/context'
 import * as github from '@actions/github'
 
 export async function getChangedFiles(

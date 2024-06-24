@@ -1,7 +1,7 @@
-import {Context} from '@actions/github/lib/context'
+import { Context } from '@actions/github/lib/context'
 import * as github from '@actions/github'
 import * as octokit from '@octokit/rest'
-import {Label} from './getLabelsFromOwners'
+import { Label } from './getLabelsFromOwners'
 
 export async function applyLabels(
   context: Context,
@@ -9,7 +9,9 @@ export async function applyLabels(
   labels: Set<Label>
 ): Promise<void> {
   // create labels if they don't exist
-  const p: Promise<octokit.Response<octokit.IssuesCreateLabelResponse>>[] = []
+  const p: Promise<
+    octokit.Octokit.Response<octokit.Octokit.IssuesCreateLabelResponse>
+  >[] = []
   // store labels in a list; will be used later
   const labelsAll: string[] = []
   try {
@@ -27,7 +29,11 @@ export async function applyLabels(
     await Promise.all(p)
   } catch (error) {
     // if 422, label already exists
-    if (error.status !== 422) {
+    if (
+      error instanceof Error &&
+      'code' in error &&
+      error.code !== 'already_exists'
+    ) {
       throw error
     }
   }

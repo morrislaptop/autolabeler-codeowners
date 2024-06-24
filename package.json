@@ -66,12 +66,20 @@
     ]
   },
   "dependencies": {
-    "@actions/core": "^1.10.1"
+    "@actions/core": "^1.10.1",
+    "@actions/github": "^2.1.0",
+    "@octokit/auth": "^1.1.1",
+    "@octokit/rest": "^16.41.1",
+    "@octokit/webhooks": "^7.0.0",
+    "codeowners": "^4.1.1",
+    "codeowners-api": "github:code-owners/codeowners-api#master",
+    "randomcolor": "^0.6.2"
   },
   "devDependencies": {
     "@jest/globals": "^29.7.0",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.14.2",
+    "@types/randomcolor": "^0.5.9",
     "@typescript-eslint/eslint-plugin": "^7.13.0",
     "@typescript-eslint/parser": "^7.13.0",
     "@vercel/ncc": "^0.38.1",
