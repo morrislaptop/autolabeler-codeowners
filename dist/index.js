@@ -56688,12 +56688,6 @@ async function applyLabels(context, client, labels) {
     }
     catch (error) {
         // if 422, label already exists
-        console.log({
-            error,
-            iofe: error instanceof Error,
-            sine: 'status' in error,
-            e422: error.status !== 422
-        });
         if (error instanceof Error && 'status' in error && error.status !== 422) {
             throw error;
         }
