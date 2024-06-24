@@ -71,7 +71,7 @@
     "@octokit/auth": "^1.1.1",
     "@octokit/rest": "^16.41.1",
     "@octokit/webhooks": "^7.0.0",
-    "codeowners": "^4.1.1",
+    "codeowners": "^5.1.1",
     "codeowners-api": "github:code-owners/codeowners-api#master",
     "randomcolor": "^0.6.2"
   },
