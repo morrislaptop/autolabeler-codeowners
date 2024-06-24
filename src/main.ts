@@ -1,5 +1,9 @@
 import * as core from '@actions/core'
-import { wait } from './wait'
+import {getChangedFiles} from './getChangedFiles'
+import * as github from '@actions/github'
+import {getCodeOwnersFromPaths} from './getCodeOwnersFromPaths'
+import {getLabelsFromOwners, Label} from './getLabelsFromOwners'
+import {applyLabels} from './applyLabels'
 
 /**
  * The main function for the action.
@@ -7,18 +11,22 @@ import { wait } from './wait'
  */
 export async function run(): Promise<void> {
   try {
-    const ms: string = core.getInput('milliseconds')
+    const client = new github.GitHub(core.getInput('githubToken'))
 
-    // Debug logs are only output if the `ACTIONS_STEP_DEBUG` secret is true
-    core.debug(`Waiting ${ms} milliseconds ...`)
+    // get all paths (file paths) changed in the PR
+    const paths: string[] = await getChangedFiles(github.context, client)
+    core.info(`Obtained paths: ${paths}`)
 
-    // Log the current timestamp, wait, then log the new timestamp
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
+    // paths -> set of codeowners for the paths
+    const owners: Set<string> = await getCodeOwnersFromPaths(paths)
+    core.info(`Obtained owners for paths: ${Array.from(owners)}`)
 
-    // Set outputs for other workflow steps to use
-    core.setOutput('time', new Date().toTimeString())
+    // set of codeowners -> set of labels
+    const labels: Set<Label> = await getLabelsFromOwners(owners)
+    core.info(`Obtained labels for change: ${Array.from(labels)}`)
+
+    // apply the set of labels to the PR
+    await applyLabels(github.context, client, labels)
   } catch (error) {
     // Fail the workflow run if an error occurs
     if (error instanceof Error) core.setFailed(error.message)
