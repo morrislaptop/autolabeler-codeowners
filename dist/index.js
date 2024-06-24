@@ -56688,9 +56688,7 @@ async function applyLabels(context, client, labels) {
     }
     catch (error) {
         // if 422, label already exists
-        if (error instanceof Error &&
-            'code' in error &&
-            error.code !== 'already_exists') {
+        if (error instanceof Error && 'status' in error && error.status !== '422') {
             throw error;
         }
     }
@@ -56702,7 +56700,6 @@ async function applyLabels(context, client, labels) {
     await client.issues.addLabels({
         owner: context.issue.owner,
         repo: context.issue.repo,
-        // eslint-disable-next-line @typescript-eslint/camelcase
         issue_number: context.issue.number,
         labels: labelsAll
     });
@@ -56729,9 +56726,7 @@ async function getChangedFiles(context, client) {
     const files = await client.pulls.listFiles({
         owner: context.issue.owner,
         repo: context.issue.repo,
-        // eslint-disable-next-line @typescript-eslint/camelcase
         pull_number: context.issue.number,
-        // eslint-disable-next-line @typescript-eslint/camelcase
         per_page: 100
     });
     return files.data.map(x => x['filename']);
